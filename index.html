@@ -288,7 +288,11 @@ html,body{
         return;
       }
       var item = items[idx];
-      var utter = new SpeechSynthesisUtterance(item.text);
+      
+      /* ─── 語音修正：將「干擾」在背地裡用同音字「肝擾」替換送去發音引擎 ─── */
+      var cleanedText = item.text.replace(/干擾/g, '肝擾');
+      var utter = new SpeechSynthesisUtterance(cleanedText);
+      
       applyVoice(utter);
       utter.onstart = function(){
         if(mySeqId !== speechSeqId) return;
